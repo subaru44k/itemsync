@@ -1,5 +1,48 @@
-extends layout
+extends template
 
-block content
-  h1= title
-  p Welcome to #{title}
+append styles
+  // Custom styles for this template
+  link(href='/javascripts/jumbotron.css', rel='stylesheet')
+block body
+  nav.navbar.navbar-inverse.navbar-fixed-top
+    .container
+      .navbar-header
+        a.navbar-brand(href='#') ItemSync
+
+  .jumbotron
+    .container
+      h1 リアルタイムにタスクを同期
+      p
+        | 複数人でタスクを共有。タスクの変更はリアルタイムに同期。
+        br 
+        | オフライン操作も迷うことはありません。
+      p
+        a.btn.btn-primary.btn-lg(href='#', role='button') Try now
+  .container
+    h2 Real Demo 
+  .container
+    .row
+      .col-xl-2.col-md-3.col-sm-6
+        h3 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn.btn-default(href='#', role='button') View details »
+      .col-xl-2.col-md-3.col-sm-6
+        h3 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn.btn-default(href='#', role='button') View details »
+      .col-xl-2.col-md-3.col-sm-6
+        h3 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn.btn-default(href='#', role='button') View details »
+      .col-xl-2.col-md-3.col-sm-6
+        h3 Heading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+        p
+          a.btn.btn-default(href='#', role='button') View details »
