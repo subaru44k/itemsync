@@ -20,6 +20,16 @@ const itemArea = new Vue({
         items: itemList
     },
     methods: {
+        handleUpdateItem: function(item: Item) {
+            itemList.some((v: Item, i) => {
+                if (v.isSame(item)) {
+                    itemList.splice(i, 1, item);
+                    return true;
+                }
+                return false;
+            })
+
+        },
         handleDeleteItem: function(item: Item) {
 
         }
@@ -28,4 +38,3 @@ const itemArea = new Vue({
         'todo-item': TodoItemComponent
     }
 })
-console.log("hoge")
