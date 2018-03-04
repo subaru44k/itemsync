@@ -4,6 +4,7 @@ append styles
   // Custom styles for this template
   link(href='/stylesheets/jumbotron.css', rel='stylesheet')
   link(href='/stylesheets/style.css', rel='stylesheet')
+  link(href='/stylesheets/animation.css', rel='stylesheet')
 block body
   nav.navbar.navbar-inverse.navbar-fixed-top
     .container
@@ -18,10 +19,11 @@ block body
         br 
         | オフライン操作も迷うことはありません。
       p
-        a.btn.btn-primary.btn-lg(href='#', role='button') Try now
+        a.btn.btn-primary.btn-lg.try-color(href='#', role='button') Try now
   .container
     h2 Real Demo 
   .container
     #item-area
       .row
-        todo-item(v-for='eachitem in items', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
+        transition-group()
+          todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')

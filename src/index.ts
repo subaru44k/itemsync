@@ -31,7 +31,13 @@ const itemArea = new Vue({
 
         },
         handleDeleteItem: function(item: Item) {
-
+            itemList.some((v: Item, i) => {
+                if (v.isSame(item)) {
+                    itemList.splice(i, 1);
+                    return true;
+                }
+                return false;
+            })
         }
     },
     components: {
