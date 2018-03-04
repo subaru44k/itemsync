@@ -27,3 +27,6 @@ block body
       .row
         transition-group()
           todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
+  .cotainer
+    #add-item.right-align
+      img.add-button(src="/images/add_item.png", v-on:click="addNewItem")

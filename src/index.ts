@@ -19,19 +19,22 @@ const itemArea = new Vue({
             firebaseControl.updateItemForDefaultChannel(item, "anonymous");
         },
         handleDeleteItem: function(item: Item) {
-            itemList.some((v: Item, i) => {
-                if (v.isSame(item)) {
-                    itemList.splice(i, 1);
-                    return true;
-                }
-                return false;
-            })
-        }
+            firebaseControl.deleteItemForDefaultChannel(item.getId());
+        },
     },
     components: {
         'todo-item': TodoItemComponent
     }
 });
+
+const addItem = new Vue({
+    el: '#add-item',
+    methods: {
+        addNewItem: function() {
+            firebaseControl.addItemForDefaultChannel("new item", "anonymous");
+        } 
+    }
+})
 
 const firebaseControl = new FirebaseControl(firebase);
 firebaseControl.listenDefaultChannelChange(new DefaultFirebaseCallback(itemList));
