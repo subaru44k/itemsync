@@ -1,12 +1,12 @@
-import { conditionalExpression } from "babel-types";
-
 export class Item {
     id: string;
     content: string;
+    timestamp: string;
 
-    constructor(id: string, content: string) {
+    constructor(id: string, content: string, timestamp: string) {
         this.id = id;
         this.content = content;
+        this.timestamp = timestamp;
     }
 
     getId() {
@@ -15,6 +15,10 @@ export class Item {
 
     getContent() {
         return this.content;
+    }
+
+    getTimestamp() {
+        return this.timestamp;
     }
 
     isSame(item: Item) {

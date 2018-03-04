@@ -40,7 +40,7 @@ export class TodoItemComponent extends Vue {
     }
 
     onUpdateClicked(item: Item) {
-        this.updateItem(new Item(item.getId(), this.inputText))
+        this.updateItem(new Item(item.getId(), this.inputText, item.getTimestamp()))
         this.isInputVisible = false;
         this.inputText = "";
     }
