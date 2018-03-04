@@ -5,13 +5,16 @@
   padding-bottom: 5px;
 }
 
-.less-margin {
-  margin-top: 10px;
-  margin-bottom: 10px;
+.no-margin {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .item-color {
-  background-color: #3399ff;
+  border: 3px solid transparent;
+  border-radius: 10px;
+  border-color: #000000;
+  box-shadow: 3px 3px 3px rgba(0,0,0,0.4);
 }
 
 .add-button {
@@ -22,6 +25,10 @@
 
 .right-align {
   text-align: right;
+}
+
+.inline-block {
+  display: inline-block;
 }
 
 .try-color {

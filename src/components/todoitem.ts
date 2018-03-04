@@ -1,10 +1,12 @@
 const templateTags = ''
 + '<div class="col-xl-2 col-md-3 col-sm-6 item-padding">'
 + '  <div class="alert item-color" v-on:click="onItemClicked(item)">'
-+ '    <h3 class="less-margin" v-if="!isInputVisible">{{ item.getContent() }}</h3>'
-+ '    <input type="text" v-model="inputText" v-if="isInputVisible"></input>'
++ '    <div class="right-align">'
++ '      <img src="/images/checked.svg" v-on:click.stop="onDeleteClicked(item)">'
++ '    </div>'
++ '    <h3 class="no-margin inline-block" v-if="!isInputVisible">{{ item.getContent() }}</h3>'
++ '    <input class="inline-block" type="text" v-model="inputText" v-if="isInputVisible"></input>'
 + '    <button class="btn btn-default" v-if="isInputVisible" v-on:click.stop="onUpdateClicked(item)">Update</button>'
-+ '    <button class="btn btn-default" v-on:click.stop="onDeleteClicked(item)">Delete</button>'
 + '  </div>'
 + '</div>';
 

@@ -7,6 +7,7 @@
     "module": "es2015",
     // import Vue from 'vue' の書き方を許容する
     "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
     "lib": [
       "dom",
       "es2017"
