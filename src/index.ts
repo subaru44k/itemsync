@@ -6,6 +6,7 @@ import { Item } from './item/item'
 import { TodoItemComponent } from './components/todoitem';
 import { FirebaseControl } from './model/firebasecontrol';
 import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
+import { AddItemComponent } from './components/additem';
 
 const itemList = [];
 
@@ -15,6 +16,9 @@ const itemArea = new Vue({
         items: itemList
     },
     methods: {
+        handleAddItem: function() {
+            firebaseControl.addItemForDefaultChannel("new item", "anonymous");
+        },
         handleUpdateItem: function(item: Item) {
             firebaseControl.updateItemForDefaultChannel(item, "anonymous");
         },
@@ -23,18 +27,10 @@ const itemArea = new Vue({
         },
     },
     components: {
-        'todo-item': TodoItemComponent
+        'todo-item': TodoItemComponent,
+        'add-item': AddItemComponent
     }
 });
-
-const addItem = new Vue({
-    el: '#add-item',
-    methods: {
-        addNewItem: function() {
-            firebaseControl.addItemForDefaultChannel("new item", "anonymous");
-        } 
-    }
-})
 
 const firebaseControl = new FirebaseControl(firebase);
 firebaseControl.listenDefaultChannelChange(new DefaultFirebaseCallback(itemList));
