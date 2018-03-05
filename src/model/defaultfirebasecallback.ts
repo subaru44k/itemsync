@@ -1,4 +1,4 @@
-import { FirebaseCallback } from "./FirebaseCallback";
+import { FirebaseCallback } from "./firebasecallback";
 import { Item } from "../item/item";
 
 export class DefaultFirebaseCallback implements FirebaseCallback {
