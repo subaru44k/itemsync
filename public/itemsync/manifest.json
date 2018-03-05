@@ -1,0 +1,13 @@
+{
+    "name": "Share items to others",
+    "short_name": "ItemSync",
+    "icons": [
+        {
+            "src": "/images/icon.png",
+            "sizes": "300x300",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/itemsync",
+    "display": "standalone"
+}
