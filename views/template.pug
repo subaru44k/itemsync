@@ -1,5 +1,8 @@
 extends ../bower_components/jade-bootstrap/_bootstrap.pug
 
+prepend styles
+  link(rel='manifest', href='/itemsync/manifest.json')
+
 append scripts
   script(src='https://www.gstatic.com/firebasejs/4.10.1/firebase.js')
   script(src='https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js')
@@ -15,3 +18,13 @@ append scripts
     };
     firebase.initializeApp(config);
   script(src='/javascripts/bundle.js')
+  script(type='text/javascript').
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/itemsync/serviceworker.js').then(function(registration) {
+        // successfully registered
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function(err) {
+        // failed the registration
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    }
