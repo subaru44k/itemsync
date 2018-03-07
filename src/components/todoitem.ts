@@ -7,6 +7,9 @@ const templateTags = ''
 + '    <h3 class="no-margin inline-block" v-if="!isInputVisible">{{ item.getContent() }}</h3>'
 + '    <input class="inline-block" type="text" v-model="inputText" v-if="isInputVisible"></input>'
 + '    <button class="btn btn-default" v-if="isInputVisible" v-on:click.stop="onUpdateClicked(item)">Update</button>'
++ '    <div class="right-align">'
++ '      <h5 class="no-margin"><small>{{ item.getCreatedBy() }}</small></h5>'
++ '    </div>'
 + '  </div>'
 + '</div>';
 
@@ -43,7 +46,7 @@ export class TodoItemComponent extends Vue {
 
     onUpdateClicked(item: Item) {
         if (this.inputText !== item.getContent()) {
-            this.updateItem(new Item(item.getId(), this.inputText, item.getTimestamp()))
+            this.updateItem(new Item(item.getId(), this.inputText, item.getTimestamp(), item.getCreatedBy()))
         }
         this.isInputVisible = false;
         this.inputText = "";

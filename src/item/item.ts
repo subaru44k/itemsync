@@ -2,11 +2,13 @@ export class Item {
     id: string;
     content: string;
     timestamp: string;
+    createdBy: string;
 
-    constructor(id: string, content: string, timestamp: string) {
+    constructor(id: string, content: string, timestamp: string, createdBy: string) {
         this.id = id;
         this.content = content;
         this.timestamp = timestamp;
+        this.createdBy = createdBy;
     }
 
     getId() {
@@ -19,6 +21,10 @@ export class Item {
 
     getTimestamp() {
         return this.timestamp;
+    }
+
+    getCreatedBy() {
+        return this.createdBy;
     }
 
     isSame(item: Item) {
