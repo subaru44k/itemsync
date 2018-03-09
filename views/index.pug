@@ -38,5 +38,5 @@ block body
       transition-group(tag='div', class='row')
         todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
     .container
-      .right-align
+      .row.justify-content-end
         add-item(v-on:add-item-event='handleAddItem')

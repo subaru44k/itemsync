@@ -5,11 +5,6 @@
   padding-bottom: 5px;
 }
 
-.no-margin {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
 .item-color {
   border: 3px solid transparent;
   border-radius: 10px;
@@ -29,8 +24,4 @@
 
 .inline-block {
   display: inline-block;
-}
-
-.try-color {
-  background-color: #0033ff;
 }
