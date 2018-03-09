@@ -1,21 +1,18 @@
 extends headerbase
 
 block body_content
-  .jumbotron
-    .container
-      h1 リアルタイムにタスクを同期
-      p
-        | 複数人でタスクを共有。タスクの変更はリアルタイムに同期。
-        br 
-        | オフライン操作も迷うことはありません。
-      p
-        a.btn.btn-primary.btn-lg(href='#', role='button') Try now
-  .container
-    h2 Real Demo 
-  #item-area
-    .container
-      transition-group(tag='div', class='row')
-        todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
-    .container
-      .row.justify-content-end
-        add-item(v-on:add-item-event='handleAddItem')
+  .container.mt-5
+    .row.justify-content-xl-center
+      .col-xl-8
+        form
+          .form-group
+            label(for='channelName') Channel name
+            input.form-control(type='text', id='channelName', placeholder='Input channel name')
+          .form-group
+            .form-check
+              input.form-check-input(type='radio', name='visibility', id='publicRadio', value='public' checked)
+              label.form-check-label(for='publicRadio') Public
+            .form-check
+              input.form-check-input(type='radio', name='visibility', id='privateRadio', value='private' disabled)
+              label.form-check-label(for='privateRadio') Private 
+          button.btn.btn-primary(type='submit') Create new channel
