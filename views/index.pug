@@ -5,11 +5,22 @@ append styles
   link(href='/stylesheets/jumbotron.css', rel='stylesheet')
   link(href='/stylesheets/style.css', rel='stylesheet')
   link(href='/stylesheets/animation.css', rel='stylesheet')
+
 block body
-  nav.navbar.navbar-inverse.navbar-fixed-top
-    .container
-      .navbar-header
-        a.navbar-brand(href='#') ItemSync
+  nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+    a.navbar-brand(href='#') ItemSync
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarDefault', aria-controls='navbarDefault', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarDefault.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item.active
+          a.nav-link(href='#') Home
+        li.nav-item
+          a.nav-link(href='#') Public channels
+        li.nav-item
+          a.nav-link(href='#') Accessible channels
+        li.nav-item
+          a.nav-link(href='#') Create channel
 
   .jumbotron
     .container
@@ -19,14 +30,13 @@ block body
         br 
         | オフライン操作も迷うことはありません。
       p
-        a.btn.btn-primary.btn-lg.try-color(href='#', role='button') Try now
+        a.btn.btn-primary.btn-lg(href='#', role='button') Try now
   .container
     h2 Real Demo 
   #item-area
     .container
-      .row
-        transition-group()
-          todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
-    .cotainer
-      .right-align
+      transition-group(tag='div', class='row')
+        todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
+    .container
+      .row.justify-content-end
         add-item(v-on:add-item-event='handleAddItem')
