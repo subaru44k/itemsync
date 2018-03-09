@@ -1,0 +1,23 @@
+extends mainlayoutbase
+
+append styles
+  // Custom styles for this template
+  link(href='/stylesheets/jumbotron.css', rel='stylesheet')
+  link(href='/stylesheets/style.css', rel='stylesheet')
+  link(href='/stylesheets/animation.css', rel='stylesheet')
+
+block body_header
+  nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+    a.navbar-brand(href='./') ItemSync
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarDefault', aria-controls='navbarDefault', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarDefault.collapse.navbar-collapse
+      ul.navbar-nav.mr-auto
+        li.nav-item.active
+          a.nav-link(href='./') Home
+        li.nav-item
+          a.nav-link(href='#') Public channels
+        li.nav-item
+          a.nav-link(href='#') Accessible channels
+        li.nav-item
+          a.nav-link(href='./create') Create channel
