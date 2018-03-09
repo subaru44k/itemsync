@@ -18,14 +18,21 @@ module.exports = {
           // 拡張子 .ts の場合
           test: /\.ts$/,
           // TypeScript をコンパイルする
-          use: 'ts-loader'
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/]
+          }
         },
+        {
+          test: /\.vue$/,
+          loader: ['vue-loader']
+        }
       ]
     },
     // import 文で .ts ファイルを解決するため
     resolve: {
       extensions: [
-        '.ts'
+        '.ts', '.vue', '.js'
       ],
       // Webpackで利用するときの設定
       alias: {
