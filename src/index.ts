@@ -3,10 +3,10 @@ declare const firebase: any;
 import Vue from 'vue';
 
 import { Item } from './item/item'
-import { TodoItemComponent } from './components/todoitem';
 import { FirebaseControl } from './model/firebasecontrol';
 import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
-import { AddItemComponent } from './components/additem';
+import TodoItemComponent from './components/todoitem';
+import AddItemComponent from './components/additem';
 
 const itemList = [];
 

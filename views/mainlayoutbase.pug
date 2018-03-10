@@ -10,7 +10,8 @@ html(lang="en")
     block styles
       link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
   body
-    block body
+    block body_header 
+    block body_content
 
     block scripts
       link(rel='manifest', href='/itemsync/manifest.json')
@@ -30,7 +31,6 @@ html(lang="en")
           messagingSenderId: "111953616899"
         };
         firebase.initializeApp(config);
-      script(src='/javascripts/bundle.js')
       script(type='text/javascript').
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('/itemsync/serviceworker.js').then(function(registration) {

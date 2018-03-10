@@ -1,0 +1,11 @@
+extends headerbase
+
+append scripts
+  script(src='/javascripts/create_channel.bundle.js')
+
+block body_content
+  .container.mt-5
+    .row.justify-content-xl-center
+      .col-xl-8
+        #createChannel
+          create-channel-form(v-on:create-channel-event='handleCreateChannel')
