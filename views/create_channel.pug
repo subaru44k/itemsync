@@ -1,18 +1,11 @@
 extends headerbase
 
+append scripts
+  script(src='/javascripts/create_channel.bundle.js')
+
 block body_content
   .container.mt-5
     .row.justify-content-xl-center
       .col-xl-8
-        form
-          .form-group
-            label(for='channelName') Channel name
-            input.form-control(type='text', id='channelName', placeholder='Input channel name')
-          .form-group
-            .form-check
-              input.form-check-input(type='radio', name='visibility', id='publicRadio', value='public' checked)
-              label.form-check-label(for='publicRadio') Public
-            .form-check
-              input.form-check-input(type='radio', name='visibility', id='privateRadio', value='private' disabled)
-              label.form-check-label(for='privateRadio') Private 
-          button.btn.btn-primary(type='submit') Create new channel
+        #createChannel
+          create-channel-form

@@ -3,14 +3,17 @@ module.exports = {
     // development に設定するとソースマップ有効でJSファイルが出力される
     mode: 'production',
    
-    // メインとなるJavaScriptファイル（エントリーポイント）
-    entry: './src/index.ts',
+    entry: {
+      'index': './src/index.ts',
+      'create_channel': './src/create_channel.ts'
+    },
+
     // ファイルの出力設定
     output: {
       //  出力ファイルのディレクトリ名
       path: `${__dirname}/public/javascripts`,
       // 出力ファイル名
-      filename: 'bundle.js'
+      filename: '[name].bundle.js'
     },
     module: {
       rules: [

@@ -31,7 +31,6 @@ html(lang="en")
           messagingSenderId: "111953616899"
         };
         firebase.initializeApp(config);
-      script(src='/javascripts/bundle.js')
       script(type='text/javascript').
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('/itemsync/serviceworker.js').then(function(registration) {
