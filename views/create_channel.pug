@@ -8,4 +8,4 @@ block body_content
     .row.justify-content-xl-center
       .col-xl-8
         #createChannel
-          create-channel-form
+          create-channel-form(v-on:create-channel-event='handleCreateChannel')

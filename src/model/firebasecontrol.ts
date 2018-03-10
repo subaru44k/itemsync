@@ -5,6 +5,7 @@ export class FirebaseControl {
     firebase: any;
     db: any;
     defaultChannelName: string = 'defaultChannel';
+    publicChannelName: string = 'publicChannels';
     defaultChannelUid: string = '0';
     itemConnectionName: string = 'items';
 
@@ -33,6 +34,14 @@ export class FirebaseControl {
         return this.getDefaultItemReference().doc(itemId).delete();
     }
 
+    addNewPublicChannel(channelName: string, itemUpdateBy: string) {
+        return this.getPublicChannelReference().add({
+            name: channelName,
+            owner: itemUpdateBy,
+            timestamp: this.firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    }
+
     listenDefaultChannelChange(callback: FirebaseCallback) {
         this.getDefaultItemReference().onSnapshot((querySnapShot) => {
             querySnapShot.docChanges.forEach((change) => {
@@ -57,6 +66,10 @@ export class FirebaseControl {
         return this.db.collection(this.defaultChannelName)
             .doc(this.defaultChannelUid)
             .collection(this.itemConnectionName)
+    }
+
+    private getPublicChannelReference() {
+        return this.db.collection(this.publicChannelName);
     }
 
 }
