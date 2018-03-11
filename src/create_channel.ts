@@ -11,7 +11,7 @@ const createChannel = new Vue({
             if (isPublic) {
                 firebaseControl.addNewPublicChannel(channelName, 'anonymous').then((docRef) => {
                     console.log('channel added as ID: ', docRef.id);
-                    location.href = '../channels/' + docRef.id;
+                    location.href = './channels/' + docRef.id;
                 }).catch((err) =>  {
                     console.log(err);
                 });

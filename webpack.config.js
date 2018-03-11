@@ -5,7 +5,9 @@ module.exports = {
    
     entry: {
       'index': './src/index.ts',
-      'create_channel': './src/create_channel.ts'
+      'create_channel': './src/create_channel.ts',
+      'public_channels': './src/public_channels.ts',
+      'channel': './src/channel.ts'
     },
 
     // ファイルの出力設定
