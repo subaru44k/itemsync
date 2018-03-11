@@ -1,5 +1,6 @@
 import { FirebaseCallback } from './firebasecallback';
 import { Item } from '../item/item';
+import { Channel } from '../item/channel';
 
 export class FirebaseControl {
     firebase: any;
@@ -40,6 +41,20 @@ export class FirebaseControl {
             owner: itemUpdateBy,
             timestamp: this.firebase.firestore.FieldValue.serverTimestamp(),
         });
+    }
+
+    getPublicChannels(limit: number) {
+        return this.getPublicChannelReference()
+            .orderBy('timestamp')
+            .limit(limit)
+            .get()
+            .then((documentSnapshots) => {
+                var channels: Channel[] = [];
+                documentSnapshots.forEach((doc) => {
+                    channels.push(new Channel(doc.id, doc.data()['name'], doc.data()['createdBy'], doc.data()['timestamp']));
+                });
+                return channels;
+            });
     }
 
     listenDefaultChannelChange(callback: FirebaseCallback) {

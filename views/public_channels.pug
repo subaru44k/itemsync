@@ -1,0 +1,11 @@
+extends headerbase
+
+append scripts
+  script(src='/javascripts/public_channels.bundle.js')
+
+block body_content
+  #publicChannels
+    .container.mt-5
+      .row.justify-content-center
+        .col-10
+          channel-item(v-for='eachchannel in channels', :key='eachchannel.id', v-bind:channel='eachchannel')

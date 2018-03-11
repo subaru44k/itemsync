@@ -8,7 +8,7 @@ import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
 
-const itemList = [];
+const itemList: Item[] = [];
 
 const itemArea = new Vue({
     el: '#item-area',
