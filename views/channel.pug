@@ -1,0 +1,17 @@
+extends headerbase
+
+append scripts
+ script(type='text/javascript').
+   var channelId = !{JSON.stringify(channelIdString)}
+ script(src='/javascripts/channel.bundle.js')
+
+block body_content
+  #item-area
+    .container.mt-5
+      h2(v-cloak) {{ channelName[0] }}
+    .container
+      transition-group(tag='div', class='row')
+        todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
+    .container
+      .row.justify-content-end
+        add-item(v-on:add-item-event='handleAddItem')

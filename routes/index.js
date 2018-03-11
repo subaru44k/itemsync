@@ -14,4 +14,8 @@ router.get('/public', function(req, res, next) {
   res.render('public_channels', { title: 'ItemSync' });
 });
 
+router.get('/channels/:id', function(req, res, next) {
+  res.render('channel', { title: 'ItemSync' , channelIdString: req.params.id })
+})
+
 module.exports = router;

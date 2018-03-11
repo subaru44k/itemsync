@@ -13,6 +13,7 @@
       }
   
       onAddClicked() {
+          console.log('add button')
           this.addItem();
       }
   }
