@@ -11,8 +11,26 @@ import SignoutButtonComponent from './components/signoutbutton';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
 
-const itemList: Item[] = [];
+const menuArea = new Vue({
+    el: '#menu-area',
+    data: {
+        activeIndex: 0,
+        user: null
+    },
+    methods: {
+        setUserData(user: any) {
+            this.user = user;
+        },
+        unsetUserData() {
+            this.user = null;
+        },
+        logout: function() {
+            firebaseAuthControl.signOut();
+        }
+    }
+})
 
+const itemList: Item[] = [];
 const itemArea = new Vue({
     el: '#item-area',
     data: {
@@ -49,10 +67,12 @@ function onSignin(user: any) {
     console.log(user.email);
     console.log(user.photoURL);
     console.log(user.uid);
+    menuArea.setUserData(user);
 }
 
 function onSignout() {
-        console.log('signed out');
+    console.log('signed out');
+    menuArea.unsetUserData();
 }
 
 const firebaseControl = new FirebaseControl(firebase);
