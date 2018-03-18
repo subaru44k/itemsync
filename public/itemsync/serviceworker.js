@@ -2,7 +2,7 @@ var CACHE_NAME = 'cache-v2';
 var urlsToCache = [
 //  '/itemsync/',
   '/itemsync/manifest.json',
-  '/itemsync/serviceworker.js',
+//  '/itemsync/serviceworker.js',
   '/images/icon.png',
   '/images/add_item.png',
   '/images/checked.svg',

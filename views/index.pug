@@ -1,21 +1,22 @@
-extends headerbase 
+extends headerbase
 
 append scripts
   script(src='/javascripts/index.bundle.js')
 
 block body_content
-  .jumbotron
+  #index-area
+    navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
+    .jumbotron
+      .container
+        h1 リアルタイムにタスクを同期
+        p
+          | 複数人でタスクを共有。タスクの変更はリアルタイムに同期。
+          br 
+          | オフライン操作も迷うことはありません。
+        p
+          signin-button(v-on:signin-event='handleSignin', v-if='!user')
     .container
-      h1 リアルタイムにタスクを同期
-      p
-        | 複数人でタスクを共有。タスクの変更はリアルタイムに同期。
-        br 
-        | オフライン操作も迷うことはありません。
-      p
-        a.btn.btn-primary.btn-lg(href='#', role='button') Try now
-  .container
-    h2 Real Demo 
-  #item-area
+      h2 Real Demo 
     .container
       transition-group(tag='div', class='row')
         todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')

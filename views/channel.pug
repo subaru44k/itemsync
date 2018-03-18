@@ -6,7 +6,8 @@ append scripts
  script(src='/javascripts/channel.bundle.js')
 
 block body_content
-  #item-area
+  #channel-area
+    navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
     .container.mt-5
       h2(v-cloak) {{ channelName[0] }}
     .container

@@ -5,6 +5,7 @@ append scripts
 
 block body_content
   #publicChannels
+    navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
     .container.mt-5
       .row.justify-content-center
         .col-10

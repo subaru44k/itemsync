@@ -5,7 +5,9 @@ import Vue from 'vue';
 
 import { Item } from './item/item'
 import { FirebaseControl } from './model/firebasecontrol';
+import { FirebaseAuthControl } from './model/firebaseauthcontrol';
 import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
+import NavbarComponent from './components/navbar';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
 
@@ -14,13 +16,24 @@ const itemList: Item[] = [];
 
 channelName.push('');
 
-const itemArea = new Vue({
-    el: '#item-area',
+const channelArea = new Vue({
+    el: '#channel-area',
     data: {
+        activeIndex: 1,
+        user: null,
         channelName: channelName,
         items: itemList
     },
     methods: {
+        handleLogout: function() {
+            firebaseAuthControl.signOut();
+        },
+        setUserData(user: any) {
+            this.user = user;
+        },
+        unsetUserData() {
+            this.user = null;
+        },
         handleAddItem: function() {
             firebaseControl.addItemForPublicChannel(channelId, "new item", "anonymous");
         },
@@ -32,10 +45,25 @@ const itemArea = new Vue({
         },
     },
     components: {
+        'navigation-menu': NavbarComponent,
         'todo-item': TodoItemComponent,
         'add-item': AddItemComponent
     }
 });
+
+function onSignin(user: any) {
+    console.log(user);
+    console.log(user.displayName);
+    console.log(user.email);
+    console.log(user.photoURL);
+    console.log(user.uid);
+    channelArea.setUserData(user);
+}
+
+function onSignout() {
+    console.log('signed out');
+    channelArea.unsetUserData();
+}
 
 const firebaseControl = new FirebaseControl(firebase);
 firebaseControl.getPublicChannel(channelId).then((channelDoc) => {
@@ -43,3 +71,5 @@ firebaseControl.getPublicChannel(channelId).then((channelDoc) => {
     channelName.push(channelDoc.data()['name']);
 });
 firebaseControl.listenChannelChange(channelId, new DefaultFirebaseCallback(itemList));
+const firebaseAuthControl = new FirebaseAuthControl(firebase);
+firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);
