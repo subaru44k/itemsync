@@ -8,7 +8,7 @@
         input.form-check-input(type='radio', v-model='visibility', id='publicRadio', value='public' checked required)
         label.form-check-label(for='publicRadio') Public
       .form-check
-        input.form-check-input(type='radio', v-model='visibility', id='privateRadio', value='private' disabled)
+        input.form-check-input(type='radio', v-model='visibility', id='privateRadio', value='private' v-bind:disabled='!user')
         label.form-check-label(for='privateRadio') Private 
     button.btn.btn-primary(v-on:click="onClick(channelName, visibility)") Create new channel
 </template>
@@ -20,7 +20,11 @@
   import Vue from 'vue'
   import Component from 'vue-class-component'
 
-  @Component
+  @Component({
+    props: {
+      user: Object
+    }
+  })
   export default class CreateChannelForm extends Vue {
     channelName: string = '';
     visibility: string = 'public';

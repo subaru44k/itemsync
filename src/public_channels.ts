@@ -12,7 +12,7 @@ const channelList: Channel[] = [];
 const channelItem = new Vue({
     el: '#publicChannels',
     data: {
-        activeIndex: 0,
+        activeIndex: 1,
         user: null,
         channels: channelList
     },
