@@ -1,11 +1,11 @@
-extends headerbase 
+extends headerbase
 
 append scripts
   script(src='/javascripts/index.bundle.js')
 
-
 block body_content
-  #item-area
+  #index-area
+    navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
     .jumbotron
       .container
         h1 リアルタイムにタスクを同期
@@ -14,7 +14,7 @@ block body_content
           br 
           | オフライン操作も迷うことはありません。
         p
-          signin-button(v-on:signin-event='handleSignin')
+          signin-button(v-on:signin-event='handleSignin', v-if='!user')
     .container
       h2 Real Demo 
     .container

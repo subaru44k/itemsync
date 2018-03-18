@@ -6,16 +6,19 @@ import { Item } from './item/item'
 import { FirebaseControl } from './model/firebasecontrol';
 import { FirebaseAuthControl } from './model/firebaseauthcontrol';
 import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
+import NavbarComponent from './components/navbar';
 import SigninButtonComponent from './components/signinbutton';
 import SignoutButtonComponent from './components/signoutbutton';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
 
-const menuArea = new Vue({
-    el: '#menu-area',
+const itemList: Item[] = [];
+const indexArea = new Vue({
+    el: '#index-area',
     data: {
         activeIndex: 0,
-        user: null
+        user: null,
+        items: itemList
     },
     methods: {
         setUserData(user: any) {
@@ -24,19 +27,9 @@ const menuArea = new Vue({
         unsetUserData() {
             this.user = null;
         },
-        logout: function() {
+        handleLogout: function() {
             firebaseAuthControl.signOut();
-        }
-    }
-})
-
-const itemList: Item[] = [];
-const itemArea = new Vue({
-    el: '#item-area',
-    data: {
-        items: itemList
-    },
-    methods: {
+        },
         handleSignin: function() {
             firebaseAuthControl.redirectForLogin();
         },
@@ -54,6 +47,7 @@ const itemArea = new Vue({
         },
     },
     components: {
+        'navigation-menu': NavbarComponent,
         'signin-button': SigninButtonComponent,
         'signout-button': SignoutButtonComponent,
         'todo-item': TodoItemComponent,
@@ -67,12 +61,12 @@ function onSignin(user: any) {
     console.log(user.email);
     console.log(user.photoURL);
     console.log(user.uid);
-    menuArea.setUserData(user);
+    indexArea.setUserData(user);
 }
 
 function onSignout() {
     console.log('signed out');
-    menuArea.unsetUserData();
+    indexArea.unsetUserData();
 }
 
 const firebaseControl = new FirebaseControl(firebase);
