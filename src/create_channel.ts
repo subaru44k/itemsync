@@ -25,13 +25,29 @@ const createChannel = new Vue({
         handleCreateChannel: function(channelName: string, isPublic: boolean) {
             if (isPublic) {
                 firebaseControl.addNewPublicChannel(channelName, 'anonymous').then((docRef) => {
-                    console.log('channel added as ID: ', docRef.id);
+                    console.log('public channel added as ID: ', docRef.id);
                     location.href = './channels/' + docRef.id;
-                }).catch((err) =>  {
+                }).catch((err) => {
                     console.log(err);
                 });
             } else {
-                // implement here
+                // Check authentication by client side
+                // You should aware this value can be set by attacker since this is client side verification
+                if (!this.user) {
+                    console.log('You are not authenticated. Operation not allowed.');
+                    return;
+                }
+                // Check authentication by server side with security rules of Firebase Cloud Firestore
+                // You have to ensure this rule works correctly.
+                firebaseControl.addNewPrivateChannel(channelName, this.user.uid).then((docRef) => {
+                    console.log('private channel added as ID: ', docRef.id);
+                    // location.href = './privateChannels/' + docRef.id;
+                }).catch((err) => {
+                    // If server side verification fails, this catch clause will be called
+                    console.warn('error occurs when creating private channel');
+                    console.warn('Do you try to create private channel without authentication?');
+                    console.warn(err);
+                })
             }
         }
     },

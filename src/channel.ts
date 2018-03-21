@@ -70,6 +70,6 @@ firebaseControl.getPublicChannel(channelId).then((channelDoc) => {
     channelName.pop();
     channelName.push(channelDoc.data()['name']);
 });
-firebaseControl.listenChannelChange(channelId, new DefaultFirebaseCallback(itemList));
+firebaseControl.listenPublicChannelChange(channelId, new DefaultFirebaseCallback(itemList));
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);
