@@ -1,142 +1,59 @@
 import { FirebaseCallback } from './firebasecallback';
 import { Item } from '../item/item';
 import { Channel } from '../item/channel';
+import { FirebaseDefaultChannelControl } from './firebasedatabase/FirebaseDefaultChannelControl';
+import { FirebasePublicChannelControl } from './firebasedatabase/FirebasePublicChannelControl';
 
 export class FirebaseControl {
-    firebase: any;
-    db: any;
-    defaultChannelName: string = 'defaultChannel';
-    publicChannelCollectionName: string = 'publicChannels';
-    defaultChannelUid: string = '0';
-    itemConnectionName: string = 'items';
+    defaultChannelControl: FirebaseDefaultChannelControl;
+    publicChannelControl: FirebasePublicChannelControl;
 
     constructor(firebase: any) {
-        this.firebase = firebase;
-        this.db = firebase.firestore();
+        this.defaultChannelControl = new FirebaseDefaultChannelControl(firebase);
+        this.publicChannelControl = new FirebasePublicChannelControl(firebase);
     }
 
     addItemForDefaultChannel(itemContent: string, itemCreatedBy: string) {
-        return this.getDefaultItemReference().add({
-            content: itemContent,
-            createdBy: itemCreatedBy,
-            timestamp: this.firebase.firestore.FieldValue.serverTimestamp()
-        })
+        return this.defaultChannelControl.addItem('not used', itemContent, itemCreatedBy);
     }
 
     addItemForPublicChannel(channelId: string, itemContent: string, itemCreatedBy: string) {
-        return this.getPublicChannelItemReference(channelId).add({
-            content: itemContent,
-            createdBy: itemCreatedBy,
-            timestamp: this.firebase.firestore.FieldValue.serverTimestamp()
-        })
+        return this.publicChannelControl.addItem(channelId, itemContent, itemCreatedBy);
     }
 
-    updateItemForDefaultChannel(item: Item, itemUpdateBy: string) {
-        return this.getDefaultItemReference().doc(item.getId()).update({
-            content: item.getContent(),
-            createdBy: itemUpdateBy,
-            timestamp: this.firebase.firestore.FieldValue.serverTimestamp()
-        })
+    updateItemForDefaultChannel(item: Item, itemUpdatedBy: string) {
+        return this.defaultChannelControl.updateItem('not used', item, itemUpdatedBy);
     }
 
-    updateItemForPublicChannel(channelId: string, item: Item, itemUpdateBy: string) {
-        return this.getPublicChannelItemReference(channelId).doc(item.getId()).update({
-            content: item.getContent(),
-            createdBy: itemUpdateBy,
-            timestamp: this.firebase.firestore.FieldValue.serverTimestamp()
-        })
+    updateItemForPublicChannel(channelId: string, item: Item, itemUpdatedBy: string) {
+        return this.publicChannelControl.updateItem(channelId, item, itemUpdatedBy);
     }
-
 
     deleteItemForDefaultChannel(itemId: string) {
-        return this.getDefaultItemReference().doc(itemId).delete();
+        return this.defaultChannelControl.deleteItem('not used', itemId);
     }
 
     deleteItemForPublicChannel(channelId: string, itemId: string) {
-        return this.getPublicChannelItemReference(channelId).doc(itemId).delete();
+        return this.publicChannelControl.deleteItem(channelId, itemId);
     }
 
-    addNewPublicChannel(channelName: string, itemUpdateBy: string) {
-        return this.getPublicChannelReference().add({
-            name: channelName,
-            owner: itemUpdateBy,
-            timestamp: this.firebase.firestore.FieldValue.serverTimestamp(),
-        });
+    addNewPublicChannel(channelName: string, itemUpdatedBy: string) {
+        return this.publicChannelControl.addChannel(channelName, itemUpdatedBy);
     }
 
     getPublicChannel(channelId: string) {
-        return this.getPublicChannelReference().doc(channelId).get();
+        return this.publicChannelControl.getChannel(channelId);
     }
 
     getPublicChannels(limit: number) {
-        return this.getPublicChannelReference()
-            .orderBy('timestamp')
-            .limit(limit)
-            .get()
-            .then((documentSnapshots) => {
-                var channels: Channel[] = [];
-                documentSnapshots.forEach((doc) => {
-                    channels.push(new Channel(doc.id, doc.data()['name'], doc.data()['createdBy'], doc.data()['timestamp']));
-                });
-                return channels;
-            });
+        return this.publicChannelControl.getChannels(limit);
     }
 
     listenDefaultChannelChange(callback: FirebaseCallback) {
-        this.getDefaultItemReference().onSnapshot((querySnapShot) => {
-            querySnapShot.docChanges.forEach((change) => {
-                if (change.type === 'added') {
-                    change.doc.metadata.hasPendingWrites
-                     ? callback.onLocalItemAdded(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']))
-                     : callback.onServerItemAdded(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']));
-                } else if (change.type === 'modified') {
-                    change.doc.metadata.hasPendingWrites
-                     ? callback.onLocalItemChanged(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']))
-                     : callback.onServerItemChanged(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']));
-                } else if (change.type === 'removed') {
-                    change.doc.metadata.hasPendingWrites
-                     ? callback.onLocalItemDeleted(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']))
-                     : callback.onServerItemDeleted(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']));
-                }  
-            });
-        })
+        this.defaultChannelControl.listenChannelChange('not used', callback);
     }
 
     listenChannelChange(channelId: string, callback: FirebaseCallback) {
-        this.getPublicChannelItemReference(channelId).onSnapshot((querySnapShot) => {
-            querySnapShot.docChanges.forEach((change) => {
-                if (change.type === 'added') {
-                    change.doc.metadata.hasPendingWrites
-                     ? callback.onLocalItemAdded(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']))
-                     : callback.onServerItemAdded(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']));
-                } else if (change.type === 'modified') {
-                    change.doc.metadata.hasPendingWrites
-                     ? callback.onLocalItemChanged(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']))
-                     : callback.onServerItemChanged(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']));
-                } else if (change.type === 'removed') {
-                    change.doc.metadata.hasPendingWrites
-                     ? callback.onLocalItemDeleted(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']))
-                     : callback.onServerItemDeleted(new Item(change.doc.id, change.doc.data()['content'], change.doc.data()['timestamp'], change.doc.data()['createdBy']));
-                }  
-            });
-
-        })
+        this.publicChannelControl.listenChannelChange(channelId, callback);
     }
-
-    private getDefaultItemReference() {
-        return this.db.collection(this.defaultChannelName)
-            .doc(this.defaultChannelUid)
-            .collection(this.itemConnectionName)
-    }
-
-    private getPublicChannelItemReference(channelId: string) {
-        return this.getPublicChannelReference()
-            .doc(channelId)
-            .collection(this.itemConnectionName);
-    }
-
-    private getPublicChannelReference() {
-        return this.db.collection(this.publicChannelCollectionName);
-    }
-
 }
