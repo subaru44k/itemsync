@@ -19,7 +19,7 @@
     channel: Channel;
 
     get url() {
-      return './channels/' + this.channel.getId();
+      return './publicchannels/' + this.channel.getId();
     }
   }
 </script>

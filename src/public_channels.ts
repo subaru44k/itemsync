@@ -5,7 +5,7 @@ import { FirebaseControl } from './model/firebasecontrol';
 import { FirebaseAuthControl } from './model/firebaseauthcontrol';
 import { Channel } from './item/channel';
 import NavbarComponent from './components/navbar';
-import ChannelItem from './components/channelitem';
+import ChannelItem from './components/publicchannelitem';
 
 const channelList: Channel[] = [];
 

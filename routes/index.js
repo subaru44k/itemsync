@@ -15,11 +15,11 @@ router.get('/public', function(req, res, next) {
 });
 
 router.get('/publicchannels/:id', function(req, res, next) {
-  res.render('publicchannel', { title: 'ItemSync' , channelIdString: req.params.id })
+  res.render('channel', { title: 'ItemSync' , channelIdString: req.params.id, scriptPath: '/javascripts/publicchannel.bundle.js'})
 });
 
 router.get('/privatechannels/:id', function(req, res, next) {
-  res.render('privatechannel', { title: 'ItemSync' , channelIdString: req.params.id })
+  res.render('channel', { title: 'ItemSync' , channelIdString: req.params.id, scriptPath: '/javascripts/privatechannel.bundle.js' })
 });
 
 module.exports = router;
