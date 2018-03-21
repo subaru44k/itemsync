@@ -35,7 +35,8 @@ const channelArea = new Vue({
             this.user = null;
         },
         handleAddItem: function() {
-            firebaseControl.addItemForPrivateChannel(channelId, "new item", "anonymous");
+            // TODO consider user.displayName cannot be changed even account user change its name by google accout setting page
+            firebaseControl.addItemForPrivateChannel(channelId, "new item", this.user.displayName);
         },
         handleUpdateItem: function(item: Item) {
             firebaseControl.updateItemForPrivateChannel(channelId, item, "anonymous");
