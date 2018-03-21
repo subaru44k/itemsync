@@ -11,7 +11,7 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
         li.nav-item(v-bind:class='{active: active_index === 1}')
           a.nav-link(href='/itemsync/public') Public channels
         li.nav-item(v-bind:class='{active: active_index === 2}')
-          a.nav-link(href='#', v-bind:class='{disabled: !user}') Accessible channels
+          a.nav-link(href='/itemsync/private', v-bind:class='{disabled: !user}') Accessible channels
         li.nav-item(v-bind:class='{active: active_index === 3}')
           a.nav-link(href='/itemsync/create') Create channel
         li.dropdown(v-if='user')
