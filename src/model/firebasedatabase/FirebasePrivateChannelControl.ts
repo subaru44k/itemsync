@@ -63,7 +63,7 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
   }
 
   listenChannelChange(channelId: string, callback: FirebaseCallback) {
-    this.getPrivateChannelItemReference(channelId).onSnapsahot((querySnapShot) => {
+    this.getPrivateChannelItemReference(channelId).onSnapshot((querySnapShot) => {
       querySnapShot.docChanges.forEach((change) => {
           if (change.type === 'added') {
               change.doc.metadata.hasPendingWrites
