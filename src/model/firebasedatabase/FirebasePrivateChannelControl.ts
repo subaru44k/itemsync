@@ -47,8 +47,9 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
     return this.getPrivateChannelReference().doc(channelId).get();
   }
 
-  getChannels(limit: number) {
+  getChannels(userId: string, limit: number) {
     return this.getPrivateChannelReference()
+    .where('owner', '==', userId)
     .orderBy('timestamp')
     .limit(limit)
     .get()

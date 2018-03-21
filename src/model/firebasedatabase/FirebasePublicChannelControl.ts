@@ -46,7 +46,7 @@ export class FirebasePublicChannelControl implements FirebaseDatabaseControl {
     return this.getPublicChannelReference().doc(channelId).get();
   }
 
-  getChannels(limit: number) {
+  getChannels(userId: string, limit: number) {
     return this.getPublicChannelReference()
     .orderBy('timestamp')
     .limit(limit)

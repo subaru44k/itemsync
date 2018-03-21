@@ -43,7 +43,7 @@ export class FirebaseDefaultChannelControl implements FirebaseDatabaseControl {
     console.error("This operation is not supported for default channel");
   }
 
-  getChannels(limit: number) {
+  getChannels(userId: string, limit: number) {
     console.error("This operation is not supported for default channel");
   }
 
