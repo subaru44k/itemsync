@@ -7,6 +7,6 @@ export interface FirebaseDatabaseControl {
   deleteItem(channelId: string, itemId: string);
   addChannel(channelName: string, itemUpdatedBy: string);
   getChannel(channelId: string);
-  getChannels(limit: number);
+  getChannels(userId: string, limit: number);
   listenChannelChange(channelId: string, callback: FirebaseCallback);
 }

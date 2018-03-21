@@ -70,12 +70,14 @@ export class FirebaseControl {
 
     getPublicChannels(limit: number) {
         // FIXME argument 'limit' can be modified by clients
-        return this.publicChannelControl.getChannels(limit);
+        // This also should be restricted on server.
+        // see https://firebase.google.com/docs/firestore/security/rules-query#evaluating_constraints_on_queries
+        return this.publicChannelControl.getChannels('not used', limit);
     }
 
-    getPrivateChannels(limit: number) {
-        // FIXME argument 'limit' can be modified by clients
-        return this.privateChannelControl.getChannels(limit);
+    getPrivateChannels(userId: string, limit: number) {
+        // FIXME argument 'userId' and 'limit' can be modified by clients
+        return this.privateChannelControl.getChannels(userId, limit);
     }
 
     listenDefaultChannelChange(callback: FirebaseCallback) {

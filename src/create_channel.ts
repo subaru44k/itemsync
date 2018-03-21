@@ -37,7 +37,7 @@ const createChannel = new Vue({
                     console.log('You are not authenticated. Operation not allowed.');
                     return;
                 }
-                // Check authentication by server side with security rules of Firebase Cloud Firestore
+                // Note: Check authentication by server side with security rules of Firebase Cloud Firestore
                 // You have to ensure this rule works correctly.
                 firebaseControl.addNewPrivateChannel(channelName, this.user.uid).then((docRef) => {
                     console.log('private channel added as ID: ', docRef.id);
