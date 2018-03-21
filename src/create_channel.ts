@@ -26,7 +26,7 @@ const createChannel = new Vue({
             if (isPublic) {
                 firebaseControl.addNewPublicChannel(channelName, 'anonymous').then((docRef) => {
                     console.log('public channel added as ID: ', docRef.id);
-                    location.href = './channels/' + docRef.id;
+                    location.href = './publicchannels/' + docRef.id;
                 }).catch((err) => {
                     console.log(err);
                 });
@@ -41,7 +41,7 @@ const createChannel = new Vue({
                 // You have to ensure this rule works correctly.
                 firebaseControl.addNewPrivateChannel(channelName, this.user.uid).then((docRef) => {
                     console.log('private channel added as ID: ', docRef.id);
-                    // location.href = './privateChannels/' + docRef.id;
+                    location.href = './privateChannels/' + docRef.id;
                 }).catch((err) => {
                     // If server side verification fails, this catch clause will be called
                     console.warn('error occurs when creating private channel');
