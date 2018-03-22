@@ -14,8 +14,16 @@ router.get('/public', function(req, res, next) {
   res.render('public_channels', { title: 'ItemSync' });
 });
 
-router.get('/channels/:id', function(req, res, next) {
-  res.render('channel', { title: 'ItemSync' , channelIdString: req.params.id })
-})
+router.get('/private', function(req, res, next) {
+  res.render('private_channels', { title: 'ItemSync' });
+});
+
+router.get('/publicchannels/:id', function(req, res, next) {
+  res.render('channel', { title: 'ItemSync' , channelIdString: req.params.id, scriptPath: '/javascripts/publicchannel.bundle.js'})
+});
+
+router.get('/privatechannels/:id', function(req, res, next) {
+  res.render('channel', { title: 'ItemSync' , channelIdString: req.params.id, scriptPath: '/javascripts/privatechannel.bundle.js' })
+});
 
 module.exports = router;

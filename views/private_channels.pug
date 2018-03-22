@@ -1,0 +1,12 @@
+extends headerbase
+
+append scripts
+  script(src='/javascripts/private_channels.bundle.js')
+
+block body_content
+  #privateChannels
+    navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
+    .container.mt-5
+      .row.justify-content-center
+        .col-10
+          channel-item(v-for='eachchannel in channels', :key='eachchannel.id', v-bind:channel='eachchannel')

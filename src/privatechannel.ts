@@ -19,7 +19,7 @@ channelName.push('');
 const channelArea = new Vue({
     el: '#channel-area',
     data: {
-        activeIndex: 1,
+        activeIndex: 2,
         user: null,
         channelName: channelName,
         items: itemList
@@ -35,13 +35,14 @@ const channelArea = new Vue({
             this.user = null;
         },
         handleAddItem: function() {
-            firebaseControl.addItemForPublicChannel(channelId, "new item", "anonymous");
+            // TODO consider user.displayName cannot be changed even account user change its name by google accout setting page
+            firebaseControl.addItemForPrivateChannel(channelId, "new item", this.user.displayName);
         },
         handleUpdateItem: function(item: Item) {
-            firebaseControl.updateItemForPublicChannel(channelId, item, "anonymous");
+            firebaseControl.updateItemForPrivateChannel(channelId, item, "anonymous");
         },
         handleDeleteItem: function(item: Item) {
-            firebaseControl.deleteItemForPublicChannel(channelId, item.getId());
+            firebaseControl.deleteItemForPrivateChannel(channelId, item.getId());
         },
     },
     components: {
@@ -66,10 +67,10 @@ function onSignout() {
 }
 
 const firebaseControl = new FirebaseControl(firebase);
-firebaseControl.getPublicChannel(channelId).then((channelDoc) => {
+firebaseControl.getPrivateChannel(channelId).then((channelDoc) => {
     channelName.pop();
     channelName.push(channelDoc.data()['name']);
 });
-firebaseControl.listenChannelChange(channelId, new DefaultFirebaseCallback(itemList));
+firebaseControl.listenPrivateChannelChange(channelId, new DefaultFirebaseCallback(itemList));
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);

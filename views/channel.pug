@@ -3,7 +3,7 @@ extends headerbase
 append scripts
  script(type='text/javascript').
    var channelId = !{JSON.stringify(channelIdString)}
- script(src='/javascripts/channel.bundle.js')
+ script(src=scriptPath)
 
 block body_content
   #channel-area

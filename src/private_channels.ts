@@ -5,14 +5,14 @@ import { FirebaseControl } from './model/firebasecontrol';
 import { FirebaseAuthControl } from './model/firebaseauthcontrol';
 import { Channel } from './item/channel';
 import NavbarComponent from './components/navbar';
-import ChannelItem from './components/publicchannelitem';
+import ChannelItem from './components/privatechannelitem';
 
 const channelList: Channel[] = [];
 
 const channelItem = new Vue({
-    el: '#publicChannels',
+    el: '#privateChannels',
     data: {
-        activeIndex: 1,
+        activeIndex: 2,
         user: null,
         channels: channelList
     },
@@ -40,6 +40,12 @@ function onSignin(user: any) {
     console.log(user.photoURL);
     console.log(user.uid);
     channelItem.setUserData(user);
+    // Note: user.uid can be modified by attacker. You also have to limit access by server side.
+    firebaseControl.getPrivateChannels(user.uid, 10).then((channels) => {
+        channels.forEach((channel) => {
+            channelList.push(channel);
+        });
+    });
 }
 
 function onSignout() {
@@ -48,10 +54,5 @@ function onSignout() {
 }
 
 const firebaseControl = new FirebaseControl(firebase);
-firebaseControl.getPublicChannels(10).then((channels) => {
-    channels.forEach((channel) => {
-        channelList.push(channel);
-    });
-});
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);

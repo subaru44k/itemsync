@@ -7,7 +7,9 @@ module.exports = {
       'index': './src/index.ts',
       'create_channel': './src/create_channel.ts',
       'public_channels': './src/public_channels.ts',
-      'channel': './src/channel.ts'
+      'private_channels': './src/private_channels.ts',
+      'publicchannel': './src/publicchannel.ts',
+      'privatechannel': './src/privatechannel.ts'
     },
 
     // ファイルの出力設定
