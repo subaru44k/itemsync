@@ -9,7 +9,38 @@ block body_content
   #channel-area
     navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
     .container.mt-5
-      h2(v-cloak) {{ channelName[0] }}
+      span.display-4(v-cloak) {{ channelName[0] }}
+      span.badge.badge-pill.badge-primary Private or Public
+      a(data-toggle='modal', data-target='#permissionSetting')
+        img(src='/images/checked.svg')
+
+    #permissionSetting.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5#permissionSettingLabel.modal-title Channel setting
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+          .modal-body
+            label.col-form-label Visible users:
+            .card
+              ul.list-group.list-group-flush
+                li.list-group-item aaa
+                li.list-group-item bbb
+            label.col-form-label Ready to add:
+            .card
+              ul.list-group.list-group-flush
+                li.list-group-item ccc
+            form
+              .form-group
+                label.col-form-label Add visible user:
+                input.form-control(type='text', placeholder='input user id here')
+            button.btn.btn-success(type='button') Prepare to add user
+          .modal-footer
+            button.btn.btn-primary(type='button') Save changes
+            button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+
+    hr
     .container
       transition-group(tag='div', class='row')
         todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')
