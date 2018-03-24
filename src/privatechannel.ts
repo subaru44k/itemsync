@@ -6,6 +6,7 @@ import Vue from 'vue';
 import { Item } from './item/item'
 import { FirebaseControl } from './model/firebasecontrol';
 import { FirebaseAuthControl } from './model/firebaseauthcontrol';
+import { FirebaseUserControl } from './model/firebaseusercontrol';
 import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
 import SettingModalComponent from './components/settingmodal';
 import NavbarComponent from './components/navbar';
@@ -23,7 +24,7 @@ const channelArea = new Vue({
         activeIndex: 2,
         user: null,
         visibleUsers: ['aaa', 'bbb'],
-        readyToAddUsers: ['ccc'],
+        readyToAddUsers: [],
         channelName: channelName,
         items: itemList
     },
@@ -38,7 +39,14 @@ const channelArea = new Vue({
             this.user = null;
         },
         handlePrepareToAddUser(userId: string) {
-            firebaseControl.confirmUserId(userId);
+            firebaseUserControl.isUserExist(userId).then((result) => {
+                if (result) {
+                    console.log(userId + ' exists');
+                    this.readyToAddUsers.push(userId);
+                } else {
+                    console.log(userId + ' does not exist');
+                }
+            });
         },
         handleSubmit() {
 
@@ -69,6 +77,13 @@ function onSignin(user: any) {
     console.log(user.photoURL);
     console.log(user.uid);
     channelArea.setUserData(user);
+    firebaseUserControl.isUserExist(user.uid).then((exist) => {
+        if (exist) {
+            firebaseUserControl.updateUserLogin(user.uid);
+        } else {
+            firebaseUserControl.addUser(user.uid);
+        }
+    });
 }
 
 function onSignout() {
@@ -84,3 +99,4 @@ firebaseControl.getPrivateChannel(channelId).then((channelDoc) => {
 firebaseControl.listenPrivateChannelChange(channelId, new DefaultFirebaseCallback(itemList));
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);
+const firebaseUserControl = new FirebaseUserControl(firebase);

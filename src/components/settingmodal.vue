@@ -47,7 +47,7 @@
     }
 
     private addUser(userId: string) {
-      this.$emit('prepare-to-add-user-event', userId);
+      this.$emit('prepare-to-add-event', userId);
     }
 
     private clearUserId() {
@@ -57,6 +57,10 @@
     onAddUserClick(userId: string) {
       console.log('add user : ' + userId);
       this.clearUserId();
+      if (this.readytoaddusers.includes(userId)) {
+        console.log('user id is ready to add');
+        return;
+      }
       if (userId === '') {
         return;
       }

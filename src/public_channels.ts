@@ -6,6 +6,7 @@ import { FirebaseAuthControl } from './model/firebaseauthcontrol';
 import { Channel } from './item/channel';
 import NavbarComponent from './components/navbar';
 import ChannelItem from './components/publicchannelitem';
+import { FirebaseUserControl } from './model/firebaseusercontrol';
 
 const channelList: Channel[] = [];
 
@@ -40,6 +41,13 @@ function onSignin(user: any) {
     console.log(user.photoURL);
     console.log(user.uid);
     channelItem.setUserData(user);
+    firebaseUserControl.isUserExist(user.uid).then((exist) => {
+        if (exist) {
+            firebaseUserControl.updateUserLogin(user.uid);
+        } else {
+            firebaseUserControl.addUser(user.uid);
+        }
+    });
 }
 
 function onSignout() {
@@ -55,3 +63,4 @@ firebaseControl.getPublicChannels(10).then((channels) => {
 });
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);
+const firebaseUserControl = new FirebaseUserControl(firebase);
