@@ -7,6 +7,7 @@ import { Item } from './item/item'
 import { FirebaseControl } from './model/firebasecontrol';
 import { FirebaseAuthControl } from './model/firebaseauthcontrol';
 import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
+import SettingModalComponent from './components/settingmodal';
 import NavbarComponent from './components/navbar';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
@@ -21,6 +22,8 @@ const channelArea = new Vue({
     data: {
         activeIndex: 2,
         user: null,
+        visibleUsers: ['aaa', 'bbb'],
+        readyToAddUsers: ['ccc'],
         channelName: channelName,
         items: itemList
     },
@@ -34,6 +37,12 @@ const channelArea = new Vue({
         unsetUserData() {
             this.user = null;
         },
+        handlePrepareToAddUser(userId: string) {
+            firebaseControl.confirmUserId(userId);
+        },
+        handleSubmit() {
+
+        },
         handleAddItem: function() {
             // TODO consider user.displayName cannot be changed even account user change its name by google accout setting page
             firebaseControl.addItemForPrivateChannel(channelId, "new item", this.user.displayName);
@@ -46,6 +55,7 @@ const channelArea = new Vue({
         },
     },
     components: {
+        'setting-modal': SettingModalComponent,
         'navigation-menu': NavbarComponent,
         'todo-item': TodoItemComponent,
         'add-item': AddItemComponent
