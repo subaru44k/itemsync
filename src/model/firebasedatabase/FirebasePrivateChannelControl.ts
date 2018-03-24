@@ -38,7 +38,7 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
     return this.getPrivateChannelReference().add({
       name: channelName,
       owner: itemUpdatedBy,
-      visibleFor: [],
+      visibleFor: {[itemUpdatedBy]: true}, // Use ComputedPropertyName to refer outer variable from Object
       timestamp: this.firebase.firestore.FieldValue.serverTimestamp(),
     });
   }
@@ -49,8 +49,7 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
 
   getChannels(userId: string, limit: number) {
     return this.getPrivateChannelReference()
-    .where('owner', '==', userId)
-    .orderBy('timestamp')
+    .where('visibleFor.' + userId, '==', true)
     .limit(limit)
     .get()
     .then((documentSnapshots) => {
