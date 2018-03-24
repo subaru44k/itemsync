@@ -14,6 +14,7 @@ import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
 
 const channelName: string[] = [];
+const visibleUsers: string[] = [];
 const itemList: Item[] = [];
 
 channelName.push('');
@@ -23,7 +24,7 @@ const channelArea = new Vue({
     data: {
         activeIndex: 2,
         user: null,
-        visibleUsers: ['aaa', 'bbb'],
+        visibleUsers: visibleUsers,
         readyToAddUsers: [],
         channelName: channelName,
         items: itemList
@@ -49,7 +50,26 @@ const channelArea = new Vue({
             });
         },
         handleSubmit() {
-
+            Promise.all(
+                this.readyToAddUsers.map((userId) => {
+                    return firebaseControl.addPermission(channelId, userId);
+                })
+            ).then(() => {
+                console.log('permission granted')
+                // add permitted users to visibleUsers variable
+                this.readyToAddUsers.forEach(element => {
+                   visibleUsers.push(element); 
+                });
+                // delete readyToAddUsers variable.
+                // Note vue.js cannot detect changed when this.readyToAddUsers.lengh = 0 is used.
+                // see: https://jp.vuejs.org/v2/guide/list.html#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A0%85
+                this.readyToAddUsers.splice(0);
+            }).catch((err) => {
+                // Do not rollback now.
+                // TODO: Please consider rollback required or not when some user cannot add to visible group.
+                console.warn('failed to add permission');
+                console.warn(err);
+            });
         },
         handleAddItem: function() {
             // TODO consider user.displayName cannot be changed even account user change its name by google accout setting page
@@ -95,6 +115,12 @@ const firebaseControl = new FirebaseControl(firebase);
 firebaseControl.getPrivateChannel(channelId).then((channelDoc) => {
     channelName.pop();
     channelName.push(channelDoc.data()['name']);
+});
+firebaseControl.getPermittedUserIds(channelId).then((userIds) => {
+    let id;
+    for (id in userIds) {
+        visibleUsers.push(id)
+    }
 });
 firebaseControl.listenPrivateChannelChange(channelId, new DefaultFirebaseCallback(itemList));
 const firebaseAuthControl = new FirebaseAuthControl(firebase);

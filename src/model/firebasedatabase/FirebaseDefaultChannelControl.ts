@@ -47,6 +47,14 @@ export class FirebaseDefaultChannelControl implements FirebaseDatabaseControl {
     console.error("This operation is not supported for default channel");
   }
 
+  getPermittedUserIds(channelId: string) {
+    throw new Error("Method not implemented.");
+  }
+
+  addPermission(channelId: string, userId: string) {
+    throw new Error("Method not implemented.");
+  }
+
   listenChannelChange(channelId: string, callback: FirebaseCallback) {
     this.getDefaultItemReference().onSnapshot((querySnapShot) => {
       querySnapShot.docChanges.forEach((change) => {
