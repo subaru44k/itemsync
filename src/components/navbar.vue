@@ -17,7 +17,8 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
         li.dropdown(v-if='user')
           img.dropdown-toggle.nav-link(:src='user && user.photoURL', width='40', height='40', class='rounded-circle d-inline-block align-top' data-toggle='dropdown', aria-expanded='false', href='#') 
           .dropdown-menu(role='menu')
-            em {{ user.displayName }}
+            a.dropdown-item {{ user.displayName }}
+            a.dropdown-item {{ user.uid }}
             a.dropdown-item(role='presentation', v-on:click='onLogout') logout
 </template>
 
