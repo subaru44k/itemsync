@@ -1,15 +1,25 @@
 var CACHE_NAME = 'cache-v2';
 var urlsToCache = [
-//  '/itemsync/',
+  '/itemsync/',
+  '/itemsync/public',
+  '/itemsync/private',
+  '/itemsync/create',
   '/itemsync/manifest.json',
 //  '/itemsync/serviceworker.js',
   '/images/icon.png',
   '/images/add_item.png',
   '/images/checked.svg',
+  '/images/settings.svg',
   '/stylesheets/jumbotron.css',
-//  '/stylesheets/style.css',
   '/stylesheets/animation.css',
-//  '/javascripts/bundle.js'
+  '/stylesheets/style.css',
+  '/javascripts/channel.bundle.js',
+  '/javascripts/create_channel.bundle.js',
+  '/javascripts/index.bundle.js',
+  '/javascripts/private_channels.bundle.js',
+  '/javascripts/privatechannel.bundle.js',
+  '/javascripts/public_channels.bundle.js',
+  '/javascripts/publicchannel.bundle.js',
 ];
 
 self.addEventListener('install', function(event) {
