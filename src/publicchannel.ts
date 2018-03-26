@@ -10,6 +10,7 @@ import { DefaultFirebaseCallback } from './model/defaultfirebasecallback';
 import NavbarComponent from './components/navbar';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
+import { FirebaseUserControl } from './model/firebaseusercontrol';
 
 const channelName: string[] = [];
 const itemList: Item[] = [];
@@ -58,6 +59,13 @@ function onSignin(user: any) {
     console.log(user.photoURL);
     console.log(user.uid);
     channelArea.setUserData(user);
+    firebaseUserControl.isUserExist(user.uid).then((exist) => {
+        if (exist) {
+            firebaseUserControl.updateUserLogin(user.uid);
+        } else {
+            firebaseUserControl.addUser(user.uid);
+        }
+    });
 }
 
 function onSignout() {
@@ -73,3 +81,4 @@ firebaseControl.getPublicChannel(channelId).then((channelDoc) => {
 firebaseControl.listenPublicChannelChange(channelId, new DefaultFirebaseCallback(itemList));
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);
+const firebaseUserControl = new FirebaseUserControl(firebase);

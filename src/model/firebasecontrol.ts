@@ -80,6 +80,14 @@ export class FirebaseControl {
         return this.privateChannelControl.getChannels(userId, limit);
     }
 
+    getPermittedUserIds(channelId: string) {
+        return this.privateChannelControl.getPermittedUserIds(channelId);
+    }
+
+    addPermission(channelId: string, userId: string) {
+        return this.privateChannelControl.addPermission(channelId, userId);
+    }
+
     listenDefaultChannelChange(callback: FirebaseCallback) {
         this.defaultChannelControl.listenChannelChange('not used', callback);
     }

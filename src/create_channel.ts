@@ -5,6 +5,7 @@ import { FirebaseControl } from './model/firebasecontrol';
 import { FirebaseAuthControl } from './model/firebaseauthcontrol';
 import NavbarComponent from './components/navbar';
 import CreateChannelFromComponent from './components/createchannelform';
+import { FirebaseUserControl } from './model/firebaseusercontrol';
 
 const createChannel = new Vue({
     el: '#createChannel',
@@ -64,6 +65,13 @@ function onSignin(user: any) {
     console.log(user.photoURL);
     console.log(user.uid);
     createChannel.setUserData(user);
+    firebaseUserControl.isUserExist(user.uid).then((exist) => {
+        if (exist) {
+            firebaseUserControl.updateUserLogin(user.uid);
+        } else {
+            firebaseUserControl.addUser(user.uid);
+        }
+    });
 }
 
 function onSignout() {
@@ -74,3 +82,4 @@ function onSignout() {
 const firebaseControl = new FirebaseControl(firebase);
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);
+const firebaseUserControl = new FirebaseUserControl(firebase);

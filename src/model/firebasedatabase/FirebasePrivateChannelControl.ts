@@ -15,7 +15,7 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
   }
 
   addItem(channelId: string, itemContent: string, itemCreatedBy: string) {
-    return this.getPrivateChannelItemReference(channelId).add({
+    return this.getPrivateChannelItemCollectionReference(channelId).add({
       content: itemContent,
       createdBy: itemCreatedBy,
       timestamp: this.firebase.firestore.FieldValue.serverTimestamp()
@@ -23,7 +23,7 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
   }
 
   updateItem(channelId: string, item: Item, itemUpdatedBy: string) {
-    return this.getPrivateChannelItemReference(channelId).doc(item.getId()).update({
+    return this.getPrivateChannelItemCollectionReference(channelId).doc(item.getId()).update({
       content: item.getContent(),
       createdBy: itemUpdatedBy,
       timestamp: this.firebase.firestore.FieldValue.serverTimestamp()
@@ -31,11 +31,11 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
   }
 
   deleteItem(channelId: string, itemId: string) {
-    return this.getPrivateChannelItemReference(channelId).doc(itemId).delete();
+    return this.getPrivateChannelItemCollectionReference(channelId).doc(itemId).delete();
   }
 
   addChannel(channelName: string, itemUpdatedBy: string) {
-    return this.getPrivateChannelReference().add({
+    return this.getPrivateChannelCollectionReference().add({
       name: channelName,
       owner: itemUpdatedBy,
       visibleFor: {[itemUpdatedBy]: true}, // Use ComputedPropertyName to refer outer variable from Object
@@ -44,11 +44,11 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
   }
 
   getChannel(channelId: string) {
-    return this.getPrivateChannelReference().doc(channelId).get();
+    return this.getPrivateChannelCollectionReference().doc(channelId).get();
   }
 
   getChannels(userId: string, limit: number) {
-    return this.getPrivateChannelReference()
+    return this.getPrivateChannelCollectionReference()
     .where('visibleFor.' + userId, '==', true)
     .limit(limit)
     .get()
@@ -61,8 +61,25 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
     });
   }
 
+  getPermittedUserIds(channelId: string) {
+    return this.getPrivateChannelDocumentReference(channelId).get().then((document) => {
+      if (document.exists) {
+        console.log(document.data()["visibleFor"]);
+        return document.data()["visibleFor"];
+      } else {
+        console.warn('channel not found : ' + channelId);
+      }
+    })
+  }
+
+  addPermission(channelId: string, userId: string) {
+    const object = {};
+    object["visibleFor." + userId] = true;
+    return this.getPrivateChannelDocumentReference(channelId).update(object)
+  }
+
   listenChannelChange(channelId: string, callback: FirebaseCallback) {
-    this.getPrivateChannelItemReference(channelId).onSnapshot((querySnapShot) => {
+    this.getPrivateChannelItemCollectionReference(channelId).onSnapshot((querySnapShot) => {
       querySnapShot.docChanges.forEach((change) => {
           if (change.type === 'added') {
               change.doc.metadata.hasPendingWrites
@@ -81,13 +98,18 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
     });
   }
 
-  private getPrivateChannelItemReference(channelId: string) {
-    return this.getPrivateChannelReference()
-        .doc(channelId)
+  private getPrivateChannelItemCollectionReference(channelId: string) {
+    return this.getPrivateChannelDocumentReference(channelId)
         .collection(this.itemConnectionName);
   }
 
-  private getPrivateChannelReference() {
+  private getPrivateChannelCollectionReference() {
     return this.db.collection(this.privateChannelCollectionName);
   }
+
+  private getPrivateChannelDocumentReference(channelId: string) {
+    return this.getPrivateChannelCollectionReference()
+      .doc(channelId);
+  }
+
 }

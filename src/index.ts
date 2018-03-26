@@ -11,6 +11,7 @@ import SigninButtonComponent from './components/signinbutton';
 import SignoutButtonComponent from './components/signoutbutton';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
+import { FirebaseUserControl } from './model/firebaseusercontrol';
 
 const itemList: Item[] = [];
 const indexArea = new Vue({
@@ -62,6 +63,13 @@ function onSignin(user: any) {
     console.log(user.photoURL);
     console.log(user.uid);
     indexArea.setUserData(user);
+    firebaseUserControl.isUserExist(user.uid).then((exist) => {
+        if (exist) {
+            firebaseUserControl.updateUserLogin(user.uid);
+        } else {
+            firebaseUserControl.addUser(user.uid);
+        }
+    });
 }
 
 function onSignout() {
@@ -73,3 +81,4 @@ const firebaseControl = new FirebaseControl(firebase);
 const firebaseAuthControl = new FirebaseAuthControl(firebase);
 firebaseControl.listenDefaultChannelChange(new DefaultFirebaseCallback(itemList));
 firebaseAuthControl.startMonitoringSigninState(onSignin, onSignout);
+const firebaseUserControl = new FirebaseUserControl(firebase);

@@ -9,7 +9,12 @@ block body_content
   #channel-area
     navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
     .container.mt-5
-      h2(v-cloak) {{ channelName[0] }}
+      span.display-4(v-cloak) {{ channelName[0] }}
+      block setting_icon
+
+    block setting_modal
+
+    hr
     .container
       transition-group(tag='div', class='row')
         todo-item(v-for='eachitem in items', :key='eachitem.id', v-bind:item='eachitem', v-on:delete-item-event='handleDeleteItem', v-on:update-item-event='handleUpdateItem')

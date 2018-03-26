@@ -60,6 +60,14 @@ export class FirebasePublicChannelControl implements FirebaseDatabaseControl {
     });
   }
 
+  getPermittedUserIds(channelId: string) {
+    throw new Error("Method not implemented.");
+  }
+
+  addPermission(channelId: string, userId: string) {
+    throw new Error("Method not implemented.");
+  }
+
   listenChannelChange(channelId: string, callback: FirebaseCallback) {
     this.getPublicChannelItemReference(channelId).onSnapshot((querySnapShot) => {
       querySnapShot.docChanges.forEach((change) => {
