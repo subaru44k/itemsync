@@ -10,11 +10,9 @@ block body_content
     navigation-menu(v-bind:user='user', v-bind:active_index='activeIndex', v-on:logout-event='handleLogout')
     .container.mt-5
       span.display-4(v-cloak) {{ channelName[0] }}
-      span.badge.badge-pill.badge-primary Private or Public
-      a(data-toggle='modal', data-target='#permissionSetting')
-        img(src='/images/checked.svg')
+      block setting_icon
 
-    setting-modal(v-bind:visibleusers='visibleUsers', v-bind:readytoaddusers='readyToAddUsers', v-on:prepare-to-add-event='handlePrepareToAddUser', v-on:submit-event='handleSubmit')
+    block setting_modal
 
     hr
     .container
