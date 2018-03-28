@@ -34,9 +34,6 @@ const indexArea = new Vue({
         handleSignin: function() {
             firebaseAuthControl.redirectForLogin();
         },
-        handleSignout: function() {
-            firebaseAuthControl.signOut();
-        },
         handleAddItem: function() {
             firebaseControl.addItemForDefaultChannel("new item", "anonymous");
         },

@@ -1,5 +1,5 @@
 <template lang="pug">
-  a.btn.btn-primary.btn-lg(v-on:click='onClick') Try now with google account
+  button.btn.btn-primary('button', v-on:click='onClick') Try now with google account
 </template>
 
 <script lang="ts">
