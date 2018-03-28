@@ -1,5 +1,5 @@
 <template lang="pug">
-nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
+nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-primary
   .container
     a.navbar-brand(href='/itemsync') ItemSync
     button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarDefault', aria-controls='navbarDefault', aria-expanded='false', aria-label='Toggle navigation')
@@ -15,7 +15,7 @@ nav.navbar.navbar-expand-md.navbar-dark.fixed-top.bg-dark
         li.nav-item(v-bind:class='{active: active_index === 3}')
           a.nav-link(href='/itemsync/create') Create channel
         li.dropdown(v-if='user')
-          img.dropdown-toggle.nav-link(:src='user && user.photoURL', width='40', height='40', class='rounded-circle d-inline-block align-top' data-toggle='dropdown', aria-expanded='false', href='#') 
+          img.dropdown-toggle(:src='user && user.photoURL', width='40', height='40', class='rounded-circle d-inline-block align-top' data-toggle='dropdown', aria-expanded='false', href='#') 
           .dropdown-menu(role='menu')
             a.dropdown-item {{ user.displayName }}
             a.dropdown-item {{ user.uid }}

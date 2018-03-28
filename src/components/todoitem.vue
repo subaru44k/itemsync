@@ -1,14 +1,15 @@
 <template lang="pug">
   .col-xl-3.col-md-4.col-sm-6.pr-2.pl-2.pt-1.pb-1
-    .alert.item-color(role="alert", v-on:click="onItemClicked(item)")
+    .card(v-on:click="onItemClicked(item)")
       .right-align
         img(src="/images/checked.svg", v-on:click.stop="onDeleteClicked(item)")
-      h3.m-0.inline-block(v-if="!isInputVisible") {{ item.getContent() }}
-      input.inline-block(type="text", v-model="inputText", v-if="isInputVisible")
-      button.btn.btn-default(v-if="isInputVisible", v-on:click.stop="onUpdateClicked(item)") Update
-      .right-align
-        p.font-weght-light.font-italic.m-0
-          small {{ item.getCreatedBy() }}
+      .card-body
+        h5.card-text.m-0.inline-block(v-if="!isInputVisible") {{ item.getContent() }}
+        input.inline-block(type="text", v-model="inputText", v-if="isInputVisible")
+        button.btn.btn-success(type='button', v-if="isInputVisible", v-on:click.stop="onUpdateClicked(item)") Update
+        .right-align
+          p.font-weght-light.font-italic.m-0
+              small {{ item.getCreatedBy() }}
 </template>
 
 <script lang='ts'>
