@@ -12,9 +12,11 @@ import SettingModalComponent from './components/settingmodal';
 import NavbarComponent from './components/navbar';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
+import { FirebaseUserDataControl } from './model/firebasedatabase/FirebaseUserDataControl';
+import { UserData } from './item/userdata';
 
 const channelName: string[] = [];
-const visibleUsers: string[] = [];
+const visibleUsers: UserData[] = [];
 const itemList: Item[] = [];
 
 channelName.push('');
@@ -58,7 +60,9 @@ const channelArea = new Vue({
                 console.log('permission granted')
                 // add permitted users to visibleUsers variable
                 this.readyToAddUsers.forEach(element => {
-                   visibleUsers.push(element); 
+                    firebaseUserDataControl.getUserData(element).then((userData) => {
+                        visibleUsers.push(userData);
+                    });
                 });
                 // delete readyToAddUsers variable.
                 // Note vue.js cannot detect changed when this.readyToAddUsers.lengh = 0 is used.
@@ -99,9 +103,9 @@ function onSignin(user: any) {
     channelArea.setUserData(user);
     firebaseUserControl.isUserExist(user.uid).then((exist) => {
         if (exist) {
-            firebaseUserControl.updateUserLogin(user.uid);
+            firebaseUserControl.updateUserLogin(user.uid, user.displayName);
         } else {
-            firebaseUserControl.addUser(user.uid);
+            firebaseUserControl.addUser(user.uid, user.displayName);
         }
     });
 }
@@ -112,6 +116,7 @@ function onSignout() {
 }
 
 const firebaseControl = new FirebaseControl(firebase);
+const firebaseUserDataControl = new FirebaseUserDataControl(firebase);
 firebaseControl.getPrivateChannel(channelId).then((channelDoc) => {
     channelName.pop();
     channelName.push(channelDoc.data()['name']);
@@ -119,7 +124,9 @@ firebaseControl.getPrivateChannel(channelId).then((channelDoc) => {
 firebaseControl.getPermittedUserIds(channelId).then((userIds) => {
     let id;
     for (id in userIds) {
-        visibleUsers.push(id)
+        firebaseUserDataControl.getUserData(id).then((userData) => {
+            visibleUsers.push(userData);
+        });
     }
 });
 firebaseControl.listenPrivateChannelChange(channelId, new DefaultFirebaseCallback(itemList));

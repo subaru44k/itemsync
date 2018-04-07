@@ -10,7 +10,7 @@
         label.col-form-label Currently visible users:
         .card
           ul.list-group.list-group-flush
-            li.list-group-item(v-for='user in visibleusers') {{ user }}
+            li.list-group-item(v-for='user in visibleusers') {{ user.getUserId() }} ({{ user.getUserName() }})
         label.col-form-label(v-if='isReadyToAddSeen') Ready to add:
         .card(v-if='isReadyToAddSeen')
           ul.list-group.list-group-flush(v-if='isReadyToAddSeen')

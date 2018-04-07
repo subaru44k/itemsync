@@ -9,17 +9,19 @@ export class FirebaseUserControl {
         this.db = firebase.firestore();
     }
 
-    addUser(userId: string) {
+    addUser(userId: string, userName: string) {
         return this.getUserDataReference().doc(userId).set({
             userId: userId,
+            userName: userName,
             lastLogin: this.firebase.firestore.FieldValue.serverTimestamp(),
             createdAt: this.firebase.firestore.FieldValue.serverTimestamp()
         })
     }
 
-    updateUserLogin(userId: string) {
+    updateUserLogin(userId: string, userName: string) {
         return this.getUserDataReference().doc(userId).update({
-           lastLogin: this.firebase.firestore.FieldValue.serverTimestamp() 
+            userName: userName;
+            lastLogin: this.firebase.firestore.FieldValue.serverTimestamp() 
         })
     }
 
