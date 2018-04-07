@@ -33,9 +33,10 @@ html(lang="en")
         firebase.initializeApp(config);
       script(type='text/javascript').
         if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/itemsync/serviceworker.js').then(function(registration) {
+          navigator.serviceWorker.register('/itemsync/serviceworker.js', {scope: '/itemsync/'}).then(function(registration) {
             // successfully registered
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            registration.update();
           }).catch(function(err) {
             // failed the registration
             console.log('ServiceWorker registration failed: ', err);

@@ -1,4 +1,7 @@
-var CACHE_NAME = 'cache-v2';
+var CACHE_NAME = 'cache-v4';
+const CACHE_KEYS = [
+  CACHE_NAME
+];
 var urlsToCache = [
   '/itemsync/',
   '/itemsync/public',
@@ -27,8 +30,13 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        return Promise.all(
+          urlsToCache.map(url => {
+            return fetch(new Request(url, { cache: 'no-cache', mode: 'no-cors' })).then(response => {
+              cache.put(url, response);
+            })
+          })
+        )
       })
   );
 });
@@ -45,3 +53,17 @@ self.addEventListener('fetch', function(event) {
         })
     );
 })
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.filter(key => {
+          return !CACHE_NAME.includes(key);
+        }).map(key => {
+          return caches.delete(key);
+        })
+      );
+    })
+  );
+});
