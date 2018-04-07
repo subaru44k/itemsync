@@ -62,9 +62,9 @@ function onSignin(user: any) {
     indexArea.setUserData(user);
     firebaseUserControl.isUserExist(user.uid).then((exist) => {
         if (exist) {
-            firebaseUserControl.updateUserLogin(user.uid);
+            firebaseUserControl.updateUserLogin(user.uid, user.displayName);
         } else {
-            firebaseUserControl.addUser(user.uid);
+            firebaseUserControl.addUser(user.uid, user.displayName);
         }
     });
 }
