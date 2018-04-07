@@ -4,15 +4,18 @@ import { Channel } from '../item/channel';
 import { FirebaseDefaultChannelControl } from './firebasedatabase/FirebaseDefaultChannelControl';
 import { FirebasePublicChannelControl } from './firebasedatabase/FirebasePublicChannelControl';
 import { FirebasePrivateChannelControl } from './firebasedatabase/FirebasePrivateChannelControl';
+import { FirebaseAnonymousChannelControl } from './firebasedatabase/FirebaseAnonymousChannelControl';
 
 export class FirebaseControl {
     defaultChannelControl: FirebaseDefaultChannelControl;
     publicChannelControl: FirebasePublicChannelControl;
+    anonymousChannelControl: FirebaseAnonymousChannelControl;
     privateChannelControl: FirebasePrivateChannelControl;
 
     constructor(firebase: any) {
         this.defaultChannelControl = new FirebaseDefaultChannelControl(firebase);
         this.publicChannelControl = new FirebasePublicChannelControl(firebase);
+        this.anonymousChannelControl = new FirebaseAnonymousChannelControl(firebase);
         this.privateChannelControl = new FirebasePrivateChannelControl(firebase);
     }
 
@@ -22,6 +25,10 @@ export class FirebaseControl {
 
     addItemForPublicChannel(channelId: string, itemContent: string, itemCreatedBy: string) {
         return this.publicChannelControl.addItem(channelId, itemContent, itemCreatedBy);
+    }
+
+    addItemForAnonymousChannel(channelId: string, itemContent: string, itemCreatedBy: string) {
+        return this.anonymousChannelControl.addItem(channelId, itemContent, itemCreatedBy);
     }
 
     addItemForPrivateChannel(channelId: string, itemContent: string, itemCreatedBy: string) {
@@ -36,6 +43,10 @@ export class FirebaseControl {
         return this.publicChannelControl.updateItem(channelId, item, itemUpdatedBy);
     }
 
+    updateItemForAnonymousChannel(channelId: string, item: Item, itemUpdatedBy: string) {
+        return this.anonymousChannelControl.updateItem(channelId, item, itemUpdatedBy);
+    }
+
     updateItemForPrivateChannel(channelId: string, item: Item, itemUpdatedBy: string) {
         return this.privateChannelControl.updateItem(channelId, item, itemUpdatedBy);
     }
@@ -48,6 +59,10 @@ export class FirebaseControl {
         return this.publicChannelControl.deleteItem(channelId, itemId);
     }
 
+    deleteItemForAnonymousChannel(channelId: string, itemId: string) {
+        return this.anonymousChannelControl.deleteItem(channelId, itemId);
+    }
+
     deleteItemForPrivateChannel(channelId: string, itemId: string) {
         return this.privateChannelControl.deleteItem(channelId, itemId);
     }
@@ -56,12 +71,20 @@ export class FirebaseControl {
         return this.publicChannelControl.addChannel(channelName, itemUpdatedBy);
     }
 
+    addNewAnonymousChannel(channelName: string, itemUpdatedBy: string) {
+        return this.anonymousChannelControl.addChannel(channelName, itemUpdatedBy);
+    }
+
     addNewPrivateChannel(channelName: string, itemUpdatedBy: string) {
         return this.privateChannelControl.addChannel(channelName, itemUpdatedBy);
     }
 
     getPublicChannel(channelId: string) {
         return this.publicChannelControl.getChannel(channelId);
+    }
+
+    getAnonymousChannel(channelId: string) {
+        return this.anonymousChannelControl.getChannel(channelId);
     }
 
     getPrivateChannel(channelId: string) {
@@ -94,6 +117,10 @@ export class FirebaseControl {
 
     listenPublicChannelChange(channelId: string, callback: FirebaseCallback) {
         this.publicChannelControl.listenChannelChange(channelId, callback);
+    }
+
+    listenAnonymousChannelChange(channelId: string, callback: FirebaseCallback) {
+        this.anonymousChannelControl.listenChannelChange(channelId, callback);
     }
 
     listenPrivateChannelChange(channelId: string, callback: FirebaseCallback) {

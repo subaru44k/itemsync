@@ -8,6 +8,9 @@
         input.form-check-input(type='radio', v-model='visibility', id='publicRadio', value='public' checked required)
         label.form-check-label(for='publicRadio') Public
       .form-check
+        input.form-check-input(type='radio', v-model='visibility', id='anonymousRadio', value='anonymous')
+        label.form-check-label(for='anonymousRadio') Anonymous(User who knows url can access this channel)
+      .form-check
         input.form-check-input(type='radio', v-model='visibility', id='privateRadio', value='private' v-bind:disabled='!user')
         label.form-check-label(for='privateRadio') Private 
     button.btn.btn-primary(v-on:click="onClick(channelName, visibility)") Create new channel
@@ -59,7 +62,7 @@
     }
 
     private isVisibilityValid(visibility: string) {
-      if (visibility === 'public' || visibility === 'private') {
+      if (visibility === 'public' || visibility === 'anonymous' || visibility === 'private') {
         return true;
       }
       return false;
@@ -76,7 +79,7 @@
     onClick() {
       console.log('clicked: ', this.channelName, this.visibility);
       if (this.isChannelNameValid(this.channelName) && this.isVisibilityValid(this.visibility)) {
-        this.$emit('create-channel-event', this.channelName, (this.visibility === 'public'));
+        this.$emit('create-channel-event', this.channelName, this.visibility);
       } else {
         console.log('invalid input');
       }
