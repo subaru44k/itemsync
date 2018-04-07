@@ -1,3 +1,5 @@
+import { UserData } from "../../item/userdata";
+
 export class FirebaseUserDataControl {
     private firebase: any;
     private db: any;
@@ -8,12 +10,12 @@ export class FirebaseUserDataControl {
         this.db = firebase.firestore();
     }
 
-    getUserName(userId: string) {
+    getUserData(userId: string) {
         return this.db.collection(this.userDataCollectionName).doc(userId).get().then((doc) => {
             if (doc.exists) {
-                return doc.data()['userName'];
+                return new UserData(userId, doc.data()['userName']);
             } else {
-                return "not found";
+                return new UserData('no_id', 'no_name');
             }
         })
     }

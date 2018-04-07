@@ -13,9 +13,10 @@ import NavbarComponent from './components/navbar';
 import TodoItemComponent from './components/todoitem';
 import AddItemComponent from './components/additem';
 import { FirebaseUserDataControl } from './model/firebasedatabase/FirebaseUserDataControl';
+import { UserData } from './item/userdata';
 
 const channelName: string[] = [];
-const visibleUsers: string[] = [];
+const visibleUsers: UserData[] = [];
 const itemList: Item[] = [];
 
 channelName.push('');
@@ -59,7 +60,9 @@ const channelArea = new Vue({
                 console.log('permission granted')
                 // add permitted users to visibleUsers variable
                 this.readyToAddUsers.forEach(element => {
-                   visibleUsers.push(element); 
+                    firebaseUserDataControl.getUserData(element).then((userData) => {
+                        visibleUsers.push(userData);
+                    });
                 });
                 // delete readyToAddUsers variable.
                 // Note vue.js cannot detect changed when this.readyToAddUsers.lengh = 0 is used.
@@ -121,8 +124,8 @@ firebaseControl.getPrivateChannel(channelId).then((channelDoc) => {
 firebaseControl.getPermittedUserIds(channelId).then((userIds) => {
     let id;
     for (id in userIds) {
-        firebaseUserDataControl.getUserName(id).then((userName) => {
-            visibleUsers.push(id + '(' + userName + ')');
+        firebaseUserDataControl.getUserData(id).then((userData) => {
+            visibleUsers.push(userData);
         });
     }
 });
