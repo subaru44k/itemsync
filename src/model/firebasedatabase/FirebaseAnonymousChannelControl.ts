@@ -68,7 +68,7 @@ export class FirebaseAnonymousChannelControl implements FirebaseDatabaseControl 
     }
 
     listenChannelChange(channelId: string, callback: FirebaseCallback) {
-      this.getAnonymousChannelItemCollectionReference(channelId).onSnapshot((querySnapShot) => {
+      this.getAnonymousChannelItemCollectionReference(channelId).orderBy('timestamp').onSnapshot((querySnapShot) => {
         querySnapShot.docChanges.forEach((change) => {
             if (change.type === 'added') {
                 change.doc.metadata.hasPendingWrites
