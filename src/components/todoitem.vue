@@ -2,10 +2,10 @@
   .col-xl-3.col-md-4.col-sm-6.pr-2.pl-2.pt-1.pb-1
     .card(v-on:click="onItemClicked(item)")
       .right-align
-        img(src="/images/checked.svg", v-on:click.stop="onDeleteClicked(item)")
+        img.cursor-item(src="/images/checked.svg", v-on:click.stop="onDeleteClicked(item)")
       .card-body
         h5.card-text.m-0.inline-block(v-if="!isInputVisible") {{ item.getContent() }}
-        input.inline-block(type="text", v-model="inputText", v-if="isInputVisible")
+        input.inline-block(type="text", v-model="inputText", v-if="isInputVisible", v-on:click.stop="onInputClicked")
         button.btn.btn-success(type='button', v-if="isInputVisible", v-on:click.stop="onUpdateClicked(item)") Update
         .right-align
           p.font-weght-light.font-italic.m-0
@@ -35,6 +35,10 @@
       private deleteItem(item: Item) {
           console.log('delete ' + item.getContent());
           this.$emit('delete-item-event', item);
+      }
+
+      onInputClicked() {
+        // nothing to do
       }
   
       onItemClicked(item: Item) {

@@ -56,7 +56,7 @@ export class FirebaseDefaultChannelControl implements FirebaseDatabaseControl {
   }
 
   listenChannelChange(channelId: string, callback: FirebaseCallback) {
-    this.getDefaultItemReference().onSnapshot((querySnapShot) => {
+    this.getDefaultItemReference().orderBy('timestamp').onSnapshot((querySnapShot) => {
       querySnapShot.docChanges.forEach((change) => {
           if (change.type === 'added') {
               change.doc.metadata.hasPendingWrites

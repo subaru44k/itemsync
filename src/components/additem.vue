@@ -1,5 +1,5 @@
 <template lang="pug">
-  img.add-button(src='/images/add_item.png', v-on:click="onAddClicked")
+  img.add-button.rounded-circle.cursor-item.shadow(src='/images/add_item.png', v-on:click="onAddClicked")
 </template>
 
 <script lang="ts">
