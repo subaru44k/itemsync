@@ -1,4 +1,4 @@
-var CACHE_NAME = 'cache-v7';
+var CACHE_NAME = 'cache-v8';
 const CACHE_KEYS = [
   CACHE_NAME
 ];
@@ -23,7 +23,7 @@ var urlsToCache = [
   '/javascripts/privatechannel.bundle.js',
   '/javascripts/public_channels.bundle.js',
   '/javascripts/publicchannel.bundle.js',
-    '/javascripts/anonymouschannel.bundle.js'
+  '/javascripts/anonymouschannel.bundle.js'
 ];
 
 self.addEventListener('install', function(event) {

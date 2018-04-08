@@ -9,7 +9,8 @@
         label.form-check-label(for='publicRadio') Public
       .form-check
         input.form-check-input(type='radio', v-model='visibility', id='anonymousRadio', value='anonymous')
-        label.form-check-label(for='anonymousRadio') Anonymous(User who knows url can access this channel)
+        label.form-check-label(for='anonymousRadio', data-toggle='tooltip', data-placement='right', title='User who knows url can access this channel, but will automatically be deleted in 60 days.')
+          u Anonymous
       .form-check
         input.form-check-input(type='radio', v-model='visibility', id='privateRadio', value='private' v-bind:disabled='!user')
         label.form-check-label(for='privateRadio') Private 
