@@ -6,7 +6,7 @@ html(lang="en")
     meta(name="description",content="")
     meta(name="author",content="")
     link(rel="icon",href="../../favicon.ico")
-    link(rel='manifest', href='/itemsync/manifest.json')
+    link(rel='manifest', href='/manifest.json')
     title= title
     block styles
       link(rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css", integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm", crossorigin="anonymous")
@@ -37,7 +37,7 @@ html(lang="en")
         firebase.initializeApp(config);
       script(type='text/javascript').
         if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/itemsync/serviceworker.js', {scope: '/itemsync/'}).then(function(registration) {
+          navigator.serviceWorker.register('/serviceworker.js', {scope: '/'}).then(function(registration) {
             // successfully registered
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
             registration.update();

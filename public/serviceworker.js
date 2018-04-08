@@ -1,14 +1,14 @@
-var CACHE_NAME = 'cache-v10';
+var CACHE_NAME = 'cache-v12';
 const CACHE_KEYS = [
   CACHE_NAME
 ];
 var urlsToCache = [
-  '/itemsync/',
-  '/itemsync/public',
-  '/itemsync/private',
-  '/itemsync/create',
-  '/itemsync/manifest.json',
-//  '/itemsync/serviceworker.js',
+  '/',
+  '/public',
+  '/private',
+  '/create',
+  '/manifest.json',
+//  '/serviceworker.js',
   '/images/icon.png',
   '/images/add_item.png',
   '/images/checked.svg',
