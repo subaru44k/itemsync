@@ -3,7 +3,7 @@ extends channelbase
 block setting_icon
   span.badge.badge-pill.badge-primary Private
   a(data-toggle='modal', data-target='#permissionSetting')
-    img(src='/images/settings.svg')
+    img.cursor-item(src='/images/settings.svg')
 
 block setting_modal
   setting-modal(v-bind:visibleusers='visibleUsers', v-bind:readytoaddusers='readyToAddUsers', v-on:prepare-to-add-event='handlePrepareToAddUser', v-on:submit-event='handleSubmit')

@@ -56,7 +56,7 @@ function onSignout() {
 }
 
 const firebaseControl = new FirebaseControl(firebase);
-firebaseControl.getPublicChannels(10).then((channels) => {
+firebaseControl.getPublicChannels(30).then((channels) => {
     channels.forEach((channel) => {
         channelList.push(channel);
     });
