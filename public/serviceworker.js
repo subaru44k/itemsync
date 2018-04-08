@@ -1,4 +1,4 @@
-var CACHE_NAME = 'cache-v12';
+var CACHE_NAME = 'cache-v13';
 const CACHE_KEYS = [
   CACHE_NAME
 ];
