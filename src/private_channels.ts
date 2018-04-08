@@ -42,7 +42,7 @@ function onSignin(user: any) {
     console.log(user.uid);
     channelItem.setUserData(user);
     // Note: user.uid can be modified by attacker. You also have to limit access by server side.
-    firebaseControl.getPrivateChannels(user.uid, 10).then((channels) => {
+    firebaseControl.getPrivateChannels(user.uid, 30).then((channels) => {
         channels.forEach((channel) => {
             channelList.push(channel);
         });

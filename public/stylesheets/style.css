@@ -39,6 +39,13 @@ body {
   transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.drop-shadow {
+  -webkit-filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.6));
+  -moz-filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.6));
+  -ms-filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.6));
+  filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.6));
+}
+
 [v-cloak] {
   display: none;
 }
