@@ -23,15 +23,20 @@ const createChannel = new Vue({
         unsetUserData() {
             this.user = null;
         },
-        handleCreateChannel: function(channelName: string, isPublic: boolean) {
-            if (isPublic) {
+        handleCreateChannel: function(channelName: string, channelType: string) {
+            if (channelType === 'public') {
                 firebaseControl.addNewPublicChannel(channelName, 'anonymous').then((docRef) => {
                     console.log('public channel added as ID: ', docRef.id);
                     location.href = './publicchannels/' + docRef.id;
                 }).catch((err) => {
                     console.log(err);
                 });
-            } else {
+            } else if (channelType === 'anonymous') {
+                firebaseControl.addNewAnonymousChannel(channelName, 'anonymous').then((docRef) => {
+                    console.log('anonymous channel added as ID: ', docRef.id);
+                    location.href = './anonymouschannels/' + docRef.id;
+                })
+            } else if (channelType === 'private') {
                 // Check authentication by client side
                 // You should aware this value can be set by attacker since this is client side verification
                 if (!this.user) {
@@ -49,6 +54,8 @@ const createChannel = new Vue({
                     console.warn('Do you try to create private channel without authentication?');
                     console.warn(err);
                 })
+            } else {
+                console.warn('unkown type of channel ' + channelType);
             }
         }
     },

@@ -9,6 +9,7 @@ module.exports = {
       'public_channels': './src/public_channels.ts',
       'private_channels': './src/private_channels.ts',
       'publicchannel': './src/publicchannel.ts',
+      'anonymouschannel': './src/anonymouschannel.ts',
       'privatechannel': './src/privatechannel.ts'
     },
 

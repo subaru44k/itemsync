@@ -20,7 +20,7 @@ export class FirebaseUserControl {
 
     updateUserLogin(userId: string, userName: string) {
         return this.getUserDataReference().doc(userId).update({
-            userName: userName;
+            userName: userName,
             lastLogin: this.firebase.firestore.FieldValue.serverTimestamp() 
         })
     }

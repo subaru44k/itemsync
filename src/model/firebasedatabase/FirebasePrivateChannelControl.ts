@@ -7,7 +7,7 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
   firebase: any;
   db: any;
   privateChannelCollectionName: string = 'privateChannels';
-  itemConnectionName: string = 'items';
+  itemCollectionName: string = 'items';
 
   constructor(firebase: any) {
     this.firebase = firebase;
@@ -100,7 +100,7 @@ export class FirebasePrivateChannelControl implements FirebaseDatabaseControl {
 
   private getPrivateChannelItemCollectionReference(channelId: string) {
     return this.getPrivateChannelDocumentReference(channelId)
-        .collection(this.itemConnectionName);
+        .collection(this.itemCollectionName);
   }
 
   private getPrivateChannelCollectionReference() {

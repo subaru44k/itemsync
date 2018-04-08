@@ -21,6 +21,10 @@ html(lang="en")
       script(src='https://www.gstatic.com/firebasejs/4.10.1/firebase-auth.js')
       script(src='https://www.gstatic.com/firebasejs/4.10.1/firebase-firestore.js')
       script.
+        // enable tooltip
+        $(function () {
+          $('[data-toggle="tooltip"]').tooltip()
+        })
         // Initialize Firebase
         var config = {
           apiKey: "AIzaSyC19Gl7B9D99gyvIQS6ov4scVhDQC0uFdo",
